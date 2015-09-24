@@ -16,6 +16,8 @@ float [] a50   = new float[41];
 float [] a210  = new float[41];
 float [] shade = new float[41];
 float [] len   = new float[41];
+int Y_AXIS = 1;
+color c1, c2;
 
 
 //// SETUP:  window size, initialization (start in middle of screen).
@@ -32,6 +34,8 @@ void setup() {
   mx = -50;
   state = 0;
   gravity = 0.1;
+  c1 = color(33,64,33);
+  c2 = color(100,200,100);
   for (int i = 0; i < xpos.length; i++){
     xpos [i] = random(0,width);
   } 
@@ -93,7 +97,19 @@ void drawMoon(){
 void drawMiscScenery(){
   background( 100,150,200 );                // sky
   fill( 100,200,100 );
-  rect( 0,horizon, width,height*3/4 );      // grass.
+  drawGrass(0, height/4, width, height*3/4, c1, c2, Y_AXIS);      // grass.
+}
+
+void drawGrass(int x, int y, float w, float h, color c1, color c2, int axis ) {
+  noFill();
+  if (axis == Y_AXIS) {  
+    for (int i = y; i <= y+h; i++) {
+      float inter = map(i, y, y+h, 0, 1);
+      color c = lerpColor(c1, c2, inter);
+      stroke(c);
+      line(x, i, x+w, i);
+    }
+  }  
 }
 
 void drawTree(float treeX, float treeY, float trans, float lenin, float a50, float a210){
