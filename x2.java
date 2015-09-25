@@ -9,15 +9,16 @@ float cx, cy;   // chaser speed.
 float sx,sy;      //sun position
 float mx,my;      //moon position
 int state;        //toggle state for sun and moon
+float dark;        //mask for night
 float horizon;
 float gravity;
-float [] xpos  = new float[41];
+float [] xpos  = new float[41];        //arrays for the forest generation
 float [] a50   = new float[41];
 float [] a210  = new float[41];
 float [] shade = new float[41];
 float [] len   = new float[41];
-int Y_AXIS = 1;
-color c1, c2;
+int Y_AXIS = 1;       //stuff for the grass gradient
+color c1, c2;         // colors for the grass gradient
 
 
 //// SETUP:  window size, initialization (start in middle of screen).
@@ -33,6 +34,7 @@ void setup() {
   sx = -50;
   mx = -50;
   state = 0;
+  dark = 110;
   gravity = 0.1;
   c1 = color(33,64,33);
   c2 = color(100,200,100);
@@ -68,6 +70,8 @@ void draw() {
   moveEmblem();
   drawChaser(cx,cy);
   moveChaser();
+  drawNight();
+  windows(400,220);
   
   
 }
@@ -80,6 +84,12 @@ void drawSun(){
   if (sx > width+50){
     state = 1;
     sx = -50;
+  }
+   if (sx >-20 && sx<80){
+    dark = dark -1;
+  }
+  if (sx >560 && sx<660){
+    dark = dark +1;
   }
 }
 
@@ -192,8 +202,17 @@ void moveChaser(){
   cy = cy - (cy - y)/40;
 }
   
-  
-  
+void drawNight(){
+  noStroke();          
+  fill(0,dark);
+  rect(0,0,width,height); 
+}
+
+void windows(float x, float y){
+  fill(255,255,0);
+  rect(x+30,y+40, 20,20);
+  rect(x+100,y+40, 20,20);
+}
 
 //////// HANDLERS:  mouse clicks, keys
 void mousePressed() {
