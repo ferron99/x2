@@ -71,7 +71,7 @@ void draw() {
   drawChaser(cx,cy);
   moveChaser();
   drawNight();
-  windows(400,220);
+  //windows(400,220);
   
   
 }
@@ -208,11 +208,11 @@ void drawNight(){
   rect(0,0,width,height); 
 }
 
-void windows(float x, float y){
+/*void windows(float x, float y){
   fill(255,255,0);
   rect(x+30,y+40, 20,20);
   rect(x+100,y+40, 20,20);
-}
+}*/
 
 //////// HANDLERS:  mouse clicks, keys
 void mousePressed() {
